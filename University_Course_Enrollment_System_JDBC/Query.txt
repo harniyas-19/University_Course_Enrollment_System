@@ -1,0 +1,34 @@
+CREATE TABLE Course_tbl (
+    Course_ID        VARCHAR2(10) PRIMARY KEY,
+    Course_title     VARCHAR2(150) NOT NULL,
+    Credits          NUMBER(2) CHECK (CREDITS > 0),
+    Capacity        NUMBER(4) CHECK (CAPACITY > 0),
+    Enrolled_count   NUMBER(4) DEFAULT 0 CHECK (ENROLLED_COUNT >= 0)
+);
+
+CREATE TABLE Enrollment_tbl1 (
+    Enrollment_ID    NUMBER(8) PRIMARY KEY,
+    Course_ID        VARCHAR2(10),
+    Student_ID       VARCHAR2(12) NOT NULL,
+    Student_name     VARCHAR2(100) NOT NULL,
+    Enrollment_date  DATE DEFAULT SYSDATE,
+    Status           VARCHAR2(10) CHECK (STATUS IN ('ENROLLED','DROPPED')),
+
+    CONSTRAINT FK_COURSE
+    FOREIGN KEY (Course_ID)
+    REFERENCES Course_tbl(Course_ID)
+);
+
+INSERT INTO Course_tbl VALUES ('CSE101','Introduction to Computer Science',4,120,95);
+INSERT INTO Course_tbl VALUES ('MAT201','Calculus II',3,80,80);
+INSERT INTO Course_tbl VALUES ('PHY150','Physics I',3,60,45);
+
+INSERT INTO Enrollment_tbl1
+VALUES (50001,'CSE101','ST3001','Aditi Rao',SYSDATE,'ENROLLED');
+
+INSERT INTO Enrollment_tbl1
+VALUES (50002,'MAT201','ST3002','Vikram Shah',SYSDATE,'ENROLLED');
+
+
+
+
